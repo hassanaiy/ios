@@ -1,0 +1,331 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and account details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["PASSENGER", "DRIVER", "ADMIN", "MODERATOR"] },
+        "status": { "type": "string", "enum": ["active", "pending", "suspended", "banned", "approved", "rejected"] },
+        "walletBalance": { "type": "number" },
+        "rating": { "type": "number" },
+        "tripsCount": { "type": "number" },
+        "createdAt": { "type": "number" },
+        "fcmToken": { "type": "string" },
+        "isOnline": { "type": "boolean" },
+        "isBlocked": { "type": "boolean" }
+      },
+      "required": ["id", "name", "role"]
+    },
+    "Ride": {
+      "title": "Ride",
+      "description": "Ride request, active trip, or scheduled ride instance",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "passengerId": { "type": "string" },
+        "passengerName": { "type": "string" },
+        "driverId": { "type": "string" },
+        "driverName": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": [
+            "IDLE",
+            "SEARCHING",
+            "OFFER_RECEIVED",
+            "ACCEPTED",
+            "ARRIVED",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "CANCELLED",
+            "SCHEDULED",
+            "EXPIRED"
+          ]
+        },
+        "isScheduled": { "type": "boolean" },
+        "scheduledTime": { "type": "number" },
+        "scheduledPickupAt": { "type": "number" },
+        "scheduleStatus": {
+          "type": "string",
+          "enum": [
+            "SCHEDULED",
+            "SEARCHING_DRIVER",
+            "DRIVER_ASSIGNED",
+            "DRIVER_EN_ROUTE",
+            "DRIVER_ARRIVED",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "CANCELLED",
+            "NO_DRIVER_FOUND"
+          ]
+        },
+        "dispatchStartedAt": { "type": "number" },
+        "driverAssignedAt": { "type": "number" },
+        "assignmentType": { "type": "string", "enum": ["EARLY_ACCEPTANCE", "AUTOMATIC_DISPATCH"] },
+        "recurringScheduleId": { "type": "string" },
+        "occurrenceKey": { "type": "string" },
+        "bookingTimezone": { "type": "string" },
+        "passengerCount": { "type": "number" },
+        "driverNote": { "type": "string" },
+        "fareLocked": { "type": "boolean" },
+        "lockedFare": { "type": "number" },
+        "estimatedFare": { "type": "number" },
+        "passengerReminderSentAt": { "type": "number" },
+        "driverReminderSentAt": { "type": "number" },
+        "lastReassignedAt": { "type": "number" },
+        "reassignmentReason": { "type": "string" },
+        "previousDriverIds": { "type": "array", "items": { "type": "string" } },
+        "searchRadiusKm": { "type": "number" },
+        "notifiedDriverIds": { "type": "array", "items": { "type": "string" } },
+        "pickup": { "type": "object" },
+        "dropoff": { "type": "object" },
+        "proposedFare": { "type": "number" },
+        "category": { "type": "string", "enum": ["MOTO", "STANDARD", "COMFORT"] },
+        "paymentMethod": { "type": "string", "enum": ["CASH", "WALLET", "INSTAPAY", " VODAFONE_CASH"] },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["id", "passengerId", "status", "pickup", "dropoff", "proposedFare"]
+    },
+    "RecurringSchedule": {
+      "title": "RecurringSchedule",
+      "description": "Master recurring ride schedule generating rolling 7-day ride instances",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "passengerId": { "type": "string" },
+        "passengerName": { "type": "string" },
+        "passengerPhone": { "type": "string" },
+        "frequency": { "type": "string", "enum": ["ONE_TIME", "DAILY", "SELECTED_WEEKDAYS", "WEEKLY"] },
+        "weekdays": { "type": "array", "items": { "type": "number" } },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "pickupTime": { "type": "string" },
+        "timezone": { "type": "string" },
+        "pickup": { "type": "object" },
+        "dropoff": { "type": "object" },
+        "category": { "type": "string", "enum": ["MOTO", "STANDARD", "COMFORT"] },
+        "paymentMethod": { "type": "string", "enum": ["CASH", "WALLET", "INSTAPAY", " VODAFONE_CASH"] },
+        "fareEstimate": { "type": "number" },
+        "estimatedDistanceKm": { "type": "number" },
+        "estimatedDurationMin": { "type": "number" },
+        "passengerCount": { "type": "number" },
+        "driverNote": { "type": "string" },
+        "status": { "type": "string", "enum": ["ACTIVE", "PAUSED", "CANCELLED", "COMPLETED"] },
+        "nextGenerationAt": { "type": "number" },
+        "lastGeneratedWindowEnd": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["id", "passengerId", "frequency", "startDate", "pickupTime", "timezone", "pickup", "dropoff", "category", "status"]
+    },
+    "DispatchLog": {
+      "title": "DispatchLog",
+      "description": "Audit and dispatch lifecycle events for scheduled rides",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "rideId": { "type": "string" },
+        "recurringScheduleId": { "type": "string" },
+        "eventType": { "type": "string" },
+        "actorId": { "type": "string" },
+        "actorRole": { "type": "string" },
+        "previousDriverId": { "type": "string" },
+        "newDriverId": { "type": "string" },
+        "searchRadiusKm": { "type": "number" },
+        "notifiedCount": { "type": "number" },
+        "message": { "type": "string" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["id", "rideId", "eventType", "message", "timestamp"]
+    },
+    "Offer": {
+      "title": "Offer",
+      "description": "Driver counter-offer for a ride",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "driverId": { "type": "string" },
+        "driverName": { "type": "string" },
+        "driverRating": { "type": "number" },
+        "amount": { "type": "number" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["id", "driverId", "amount"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Chat message between passenger and driver",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderId": { "type": "string" },
+        "text": { "type": "string" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["id", "senderId", "text", "timestamp"]
+    },
+    "Topup": {
+      "title": "Topup",
+      "description": "Wallet topup request",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["PENDING", "APPROVED", "REJECTED"] },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["id", "userId", "amount", "status"]
+    },
+    "Ticket": {
+      "title": "Ticket",
+      "description": "Support ticket",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "subject": { "type": "string" },
+        "status": { "type": "string", "enum": ["OPEN", "CLOSED"] },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["id", "userId", "subject", "status"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "User notification",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "read": { "type": "boolean" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["id", "userId", "title", "message"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Financial transaction",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "amount": { "type": "number" },
+        "type": { "type": "string" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["id", "userId", "amount", "type"]
+    },
+    "DriverLocation": {
+      "title": "DriverLocation",
+      "description": "Real-time driver coordinates",
+      "type": "object",
+      "properties": {
+        "driverId": { "type": "string" },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["driverId", "lat", "lng"]
+    },
+    "Broadcast": {
+      "title": "Broadcast",
+      "description": "Android native system message, emergency broadcast, or smart update notice",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "titleEn": { "type": "string" },
+        "titleAr": { "type": "string" },
+        "message": { "type": "string" },
+        "messageEn": { "type": "string" },
+        "messageAr": { "type": "string" },
+        "type": { "type": "string", "enum": ["maintenance", "warning", "update", "Forced Update", "promo", "alert"] },
+        "targetAudience": { "type": "string", "enum": ["all", "passengers", "drivers"] },
+        "targetPlatform": { "type": "string", "enum": ["android", "all"] },
+        "targetVersion": { "type": "string" },
+        "minBuildNumber": { "type": "number" },
+        "playStoreUrl": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "forceClose": { "type": "boolean" },
+        "expiresAt": { "type": "number" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" },
+        "pushSent": { "type": "boolean" },
+        "pushSentCount": { "type": "number" }
+      },
+      "required": ["title", "message", "type", "targetAudience", "isActive"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles"
+    },
+    "/users/{userId}/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "User-specific notifications"
+    },
+    "/rides/{rideId}": {
+      "schema": { "$ref": "#/entities/Ride" },
+      "description": "Ride requests, active trips, and scheduled rides"
+    },
+    "/rides/{rideId}/offers/{offerId}": {
+      "schema": { "$ref": "#/entities/Offer" },
+      "description": "Driver counter-offers for a specific ride"
+    },
+    "/rides/{rideId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/Message" },
+      "description": "Chat messages for a specific ride"
+    },
+    "/recurringSchedules/{scheduleId}": {
+      "schema": { "$ref": "#/entities/RecurringSchedule" },
+      "description": "Master recurring ride schedules"
+    },
+    "/dispatchLogs/{logId}": {
+      "schema": { "$ref": "#/entities/DispatchLog" },
+      "description": "Scheduled ride dispatch and assignment audit logs"
+    },
+    "/topups/{topupId}": {
+      "schema": { "$ref": "#/entities/Topup" },
+      "description": "Wallet topup requests"
+    },
+    "/tickets/{ticketId}": {
+      "schema": { "$ref": "#/entities/Ticket" },
+      "description": "Support tickets"
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "Global notifications"
+    },
+    "/transactions/{transactionId}": {
+      "schema": { "$ref": "#/entities/Transaction" },
+      "description": "Financial transactions"
+    },
+    "/driverLocations/{driverId}": {
+      "schema": { "$ref": "#/entities/DriverLocation" },
+      "description": "Real-time driver locations"
+    },
+    "/settings/{settingId}": {
+      "schema": { "type": "object" },
+      "description": "App configuration settings"
+    },
+    "/promo_codes/{promoId}": {
+      "schema": { "type": "object" },
+      "description": "Promotional codes"
+    },
+    "/audit_logs/{logId}": {
+      "schema": { "type": "object" },
+      "description": "Admin audit logs"
+    },
+    "/broadcasts/{broadcastId}": {
+      "schema": { "$ref": "#/entities/Broadcast" },
+      "description": "System broadcasts, emergency alerts, and Android app update notices"
+    }
+  }
+}

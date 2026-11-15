@@ -1,0 +1,57 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == "wondersco@gmail.com" ||
+        request.auth.token.phone_number == "+201024419931"
+      );
+    }
+
+    // Profiles and Avatars
+    match /users/{userId}/avatars/{fileName} {
+      allow read;
+      allow write: if isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Driver Documents
+    match /drivers/{driverId}/{documentName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
+    }
+    
+    // Manual top-up receipts
+    match /manual_topups/{userId}/{topupId}/{fileName} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow write: if isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Chat voice messages
+    match /rides/{rideId}/voice_messages/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
+    }
+    
+    // Support chat voice messages
+    match /supportTickets/{ticketId}/voice_messages/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
+    }
+
+    // Settlements
+    match /settlements/{userId}/{fileName} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow write: if isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Default deny
+    match /{allPaths=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

@@ -1,0 +1,64 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext {
+        kotlin_version = '2.1.0'
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // AGP 8.5.1+ is required for correct 16 KB zip alignment in app bundles.
+        classpath 'com.android.tools.build:gradle:8.5.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.4.4'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.2'
+    }
+}
+
+apply from: "variables.gradle"
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            project.android {
+                // Force all plugins to use the same NDK version supporting 16 KB
+                ndkVersion = "27.0.12077973"
+                
+                // For plugins with C++ code, force 16 KB alignment
+                defaultConfig {
+                    externalNativeBuild {
+                        cmake {
+                            arguments "-DANDROID_EXT_LINKER_FLAGS=-Wl,-z,max-page-size=16384"
+                        }
+                        ndkBuild {
+                            arguments "APP_ALIGN_16K:=true"
+                        }
+                    }
+                }
+
+                compileOptions {
+                    sourceCompatibility JavaVersion.VERSION_17
+                    targetCompatibility JavaVersion.VERSION_17
+                }
+                if (project.android.hasProperty('kotlinOptions')) {
+                    project.android.kotlinOptions {
+                        jvmTarget = '17'
+                    }
+                }
+            }
+        }
+    }
+}

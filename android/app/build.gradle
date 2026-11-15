@@ -1,0 +1,112 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.firebase.crashlytics'
+}
+
+android {
+    namespace "com.ans.waslny"
+    compileSdk project.hasProperty('compileSdkVersion') ? rootProject.ext.compileSdkVersion : 35
+
+    ndkVersion "27.0.12077973"
+
+    defaultConfig {
+        applicationId "com.ans.waslny"
+        minSdk project.hasProperty('minSdkVersion') ? rootProject.ext.minSdkVersion : 24
+        targetSdk project.hasProperty('targetSdkVersion') ? rootProject.ext.targetSdkVersion : 36
+        versionCode 37
+        versionName "4.8"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+        
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_EXT_LINKER_FLAGS=-Wl,-z,max-page-size=16384"
+            }
+        }
+    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
+
+    androidResources {
+        noCompress 'tflite'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    // Specific versions for compatibility
+    implementation "androidx.core:core:1.12.0"
+    implementation "androidx.core:core-ktx:1.12.0"
+    implementation "androidx.activity:activity:1.8.2"
+    implementation "androidx.activity:activity-ktx:1.8.2"
+    implementation "androidx.browser:browser:1.7.0"
+
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation "androidx.biometric:biometric:1.1.0"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+
+    implementation platform('com.google.firebase:firebase-bom:33.1.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-config'
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'androidx.core:core:1.12.0'
+        force 'androidx.core:core-ktx:1.12.0'
+        force 'androidx.activity:activity:1.8.2'
+        force 'androidx.activity:activity-ktx:1.8.2'
+        force 'androidx.browser:browser:1.7.0'
+        force 'androidx.core:core-splashscreen:1.0.1'
+    }
+}

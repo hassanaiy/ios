@@ -1,0 +1,13 @@
+{
+  "name": "Mowasla",
+  "description": "A professional ride-hailing application with Passenger, Driver, and Admin portals. Features real-time simulation, AI-powered route insights, and modern mobile-first UI.",
+  "requestFramePermissions": [
+    "geolocation",
+    "microphone",
+    "publickey-credentials-create",
+    "publickey-credentials-get"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

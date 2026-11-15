@@ -1,0 +1,194 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email in ['wondersco@gmail.com', 'wonderscoco10@gmail.com'] ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+          (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'ADMIN' ||
+           get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true))
+      );
+    }
+
+    function isValidScheduledFields(data) {
+      let isSched = ('isScheduled' in data) && data.isScheduled == true;
+      let pickupTime = ('scheduledPickupAt' in data && data.scheduledPickupAt is number)
+        ? data.scheduledPickupAt
+        : (('scheduledTime' in data && data.scheduledTime is number) ? data.scheduledTime : 0);
+      // Max 7 days + 2 hours buffer in ms (612000000 ms), and not more than 5 minutes in the past
+      let validWindow = !isSched || (
+        pickupTime > (request.time.toMillis() - 300000) &&
+        pickupTime <= (request.time.toMillis() + 612000000)
+      );
+      let noForgedDriver = !isSched || !('driverId' in data) || data.driverId == null || data.driverId == '' || isAdmin();
+      return validWindow && noForgedDriver;
+    }
+
+    function isValidRideBooking(data) {
+      let bType = ('bookingType' in data) ? data.bookingType : 'SELF';
+      let ownerMatch = !('bookedBy' in data) || data.bookedBy == null || data.bookedBy.userId == request.auth.uid || isAdmin();
+      let passengerMatch = !('passengerId' in data) || data.passengerId == request.auth.uid || isAdmin();
+      let validForOther = bType != 'FOR_OTHER' || (
+        ('actualPassenger' in data) &&
+        data.actualPassenger != null &&
+        data.actualPassenger.name is string &&
+        data.actualPassenger.name.size() >= 2 &&
+        data.actualPassenger.name.size() <= 120 &&
+        data.actualPassenger.phone is string &&
+        data.actualPassenger.phone.size() >= 10 &&
+        data.actualPassenger.phone.size() <= 20
+      );
+      return (bType == 'SELF' || bType == 'FOR_OTHER') && ownerMatch && passengerMatch && validForOther && isValidScheduledFields(data);
+    }
+
+    function isValidRideUpdate(oldData, newData) {
+      // Preserve bookedBy.userId integrity
+      let bookedByIntact = !('bookedBy' in oldData) ||
+        oldData.bookedBy == null ||
+        !('bookedBy' in newData) ||
+        newData.bookedBy == null ||
+        newData.bookedBy.userId == oldData.bookedBy.userId;
+
+      // Preserve passengerId integrity
+      let passengerIntact = !('passengerId' in oldData) ||
+        newData.passengerId == oldData.passengerId;
+
+      // Prevent unauthorized driver overwrite if another driver is already assigned
+      let driverAlreadyAssigned = ('driverId' in oldData) && oldData.driverId != null && oldData.driverId != '';
+      let driverAssignmentSafe = !driverAlreadyAssigned ||
+        isAdmin() ||
+        oldData.passengerId == request.auth.uid ||
+        oldData.driverId == request.auth.uid;
+
+      // For scheduled rides getting newly assigned, allow driver themselves, admin, or passenger accepting an offer
+      let settingNewDriver = !driverAlreadyAssigned && ('driverId' in newData) && newData.driverId != null && newData.driverId != '';
+      let newScheduledDriverSafe = !settingNewDriver || !('isScheduled' in newData) || newData.isScheduled != true ||
+        isAdmin() ||
+        request.auth.uid == newData.driverId ||
+        (oldData.passengerId == request.auth.uid && oldData.status == 'OFFER_RECEIVED');
+
+      return bookedByIntact && passengerIntact && driverAssignmentSafe && newScheduledDriverSafe;
+    }
+
+    match /rides/{rideId} {
+      allow read: if true;
+      allow create: if isSignedIn() && isValidRideBooking(request.resource.data);
+      allow update: if isSignedIn() && isValidRideUpdate(resource.data, request.resource.data);
+      allow delete: if isSignedIn() && (resource.data.passengerId == request.auth.uid || isAdmin());
+
+      match /{subcollection=**} {
+        allow read: if true;
+        allow write: if isSignedIn();
+      }
+    }
+
+    match /recurringSchedules/{scheduleId} {
+      allow read: if isSignedIn() && (resource.data.passengerId == request.auth.uid || isAdmin());
+      allow create: if isSignedIn() && (
+        request.resource.data.passengerId == request.auth.uid || isAdmin()
+      ) && request.resource.data.frequency in ['ONE_TIME', 'DAILY', 'SELECTED_WEEKDAYS', 'WEEKLY'];
+      allow update: if isSignedIn() && (
+        (resource.data.passengerId == request.auth.uid && request.resource.data.passengerId == resource.data.passengerId) ||
+        isAdmin()
+      );
+      allow delete: if isAdmin();
+    }
+
+    match /dispatchLogs/{logId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if isAdmin();
+    }
+
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+      match /{subcollection=**} {
+        allow read: if true;
+        allow write: if isSignedIn();
+      }
+    }
+
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /notifications/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    match /supportTickets/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    match /tickets/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+      match /{subcollection=**} {
+        allow read: if isSignedIn();
+        allow write: if isSignedIn();
+      }
+    }
+
+    match /topups/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    match /manual_topups/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    match /settlements/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    match /transactions/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    match /driverLocations/{docId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /promo_codes/{docId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /broadcasts/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /audit_logs/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    match /withdrawals/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+    }
+
+    match /chats/{docId} {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn();
+      match /{subcollection=**} {
+        allow read: if isSignedIn();
+        allow write: if isSignedIn();
+      }
+    }
+  }
+}

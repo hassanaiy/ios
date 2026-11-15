@@ -1,0 +1,6 @@
+$env:FUNCTIONS_INITIALIZATION_TIMEOUT=30000
+
+npx firebase deploy --only hosting:mowasla
+
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process

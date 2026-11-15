@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Mowasla Privacy Policy | سياسة الخصوصية لتطبيق مواصلة</title>
+    <meta
+      name="description"
+      content="سياسة الخصوصية لتطبيق مواصلة (Mowasla Privacy Policy) - تاريخ آخر تحديث: 13 نوفمبر 2026. معلومات الموقع، الأذونات، حذف الحساب، والتواصل: mowasla@mowasla.online."
+    />
+    <meta property="og:title" content="Mowasla Privacy Policy | سياسة الخصوصية لتطبيق مواصلة" />
+    <meta
+      property="og:description"
+      content="Official bilingual Privacy Policy for Mowasla (تطبيق مواصلة). Last Updated: November 13, 2026."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://waslny.ai.studio/privacy-policy" />
+    <link rel="canonical" href="https://waslny.ai.studio/privacy-policy" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-paper: #fbf9f5;
+        --bg-surface: #ffffff;
+        --text-ink: #1c1917;
+        --text-body: #44403c;
+        --text-muted: #78716c;
+        --border-hairline: #e7e5e4;
+        --accent-gold: #ffc90e;
+        --accent-gold-hover: #f59e0b;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        margin: 0;
+        background-color: var(--bg-paper);
+        color: var(--text-ink);
+        font-family: 'Cairo', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        line-height: 1.8;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(251, 249, 245, 0.94);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-hairline);
+      }
+
+      .topbar-inner {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 24px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        font-size: 18px;
+        font-weight: 900;
+        color: var(--text-ink);
+        text-decoration: none;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .topnav {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .topnav a {
+        color: var(--text-body);
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      .topnav a:hover {
+        color: var(--text-ink);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
+      .cta-btn {
+        padding: 8px 16px;
+        border-radius: 8px;
+        background: var(--accent-gold);
+        color: var(--text-ink);
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: background-color 0.15s ease;
+      }
+
+      .cta-btn:hover {
+        background: var(--accent-gold-hover);
+      }
+
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 32px 20px 64px;
+      }
+
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .lang-group {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px;
+        background: #ede9e2;
+        border-radius: 12px;
+        direction: ltr;
+      }
+
+      .lang-btn {
+        border: 0;
+        background: transparent;
+        color: var(--text-body);
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 700;
+        padding: 8px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background-color 0.15s ease, color 0.15s ease;
+      }
+
+      .lang-btn.active {
+        background: var(--bg-surface);
+        color: var(--text-ink);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+      }
+
+      .toolbar-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+        font-size: 13px;
+      }
+
+      .copy-btn {
+        border: 1px solid var(--border-hairline);
+        background: var(--bg-surface);
+        color: var(--text-ink);
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 8px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+
+      .copy-btn:hover {
+        background: #f5f5f4;
+      }
+
+      .email-link {
+        color: var(--text-body);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        direction: ltr;
+      }
+
+      .stack {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .policy-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-hairline);
+        border-radius: 16px;
+        padding: 40px 44px;
+      }
+
+      .policy-card[hidden] {
+        display: none;
+      }
+
+      .policy-card[lang='en'] {
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      }
+
+      .doc-header {
+        padding-bottom: 28px;
+        border-bottom: 1px solid var(--border-hairline);
+      }
+
+      .doc-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-muted);
+        font-variant-numeric: tabular-nums;
+        margin-bottom: 14px;
+      }
+
+      .doc-title {
+        margin: 0;
+        font-size: clamp(1.75rem, 3.2vw, 2.35rem);
+        font-weight: 900;
+        line-height: 1.25;
+        color: var(--text-ink);
+        text-wrap: balance;
+      }
+
+      .section {
+        padding: 28px 0;
+        border-bottom: 1px solid var(--border-hairline);
+        scroll-margin-top: 84px;
+      }
+
+      .section:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        margin: 0 0 12px;
+      }
+
+      .section-num {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text-muted);
+        font-variant-numeric: tabular-nums;
+        flex-shrink: 0;
+      }
+
+      .section-heading h2 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 800;
+        color: var(--text-ink);
+        line-height: 1.35;
+      }
+
+      .section p {
+        margin: 0;
+        max-width: 68ch;
+        font-size: 15.5px;
+        color: var(--text-body);
+        line-height: 1.85;
+      }
+
+      .bullet-list {
+        list-style: none;
+        margin: 14px 0 0;
+        padding: 0;
+        max-width: 68ch;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .bullet-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: 15.5px;
+        color: var(--text-body);
+        line-height: 1.8;
+      }
+
+      .bullet-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: #f59e0b;
+        margin-top: 11px;
+        flex-shrink: 0;
+      }
+
+      .bullet-list strong {
+        color: var(--text-ink);
+        font-weight: 700;
+      }
+
+      .sub-list {
+        list-style: none;
+        margin: 10px 0 0 0;
+        padding: 0;
+        padding-inline-start: 16px;
+        margin-inline-start: 18px;
+        border-inline-start: 1px solid var(--border-hairline);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        font-size: 15px;
+        color: var(--text-body);
+      }
+
+      .contact-row {
+        margin-top: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        font-size: 15.5px;
+      }
+
+      .contact-link {
+        font-weight: 700;
+        color: var(--text-ink);
+        text-decoration: underline;
+        text-decoration-color: var(--accent-gold);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+        direction: ltr;
+      }
+
+      .footer {
+        margin-top: 36px;
+        padding-top: 24px;
+        border-top: 1px solid var(--border-hairline);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+
+      .footer a {
+        color: var(--text-body);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
+      @media (max-width: 720px) {
+        .topnav {
+          display: none;
+        }
+        .policy-card {
+          padding: 26px 20px;
+        }
+        .topbar-inner {
+          padding: 0 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="/" class="brand" id="topbar-brand">مواصلة · Mowasla</a>
+        <nav class="topnav" aria-label="Policy sections">
+          <a href="#policy-ar" onclick="setLang('ar'); return false;">العربية</a>
+          <a href="#policy-en" onclick="setLang('en'); return false;">English</a>
+          <a href="#ar-deletion" id="nav-deletion">حذف الحساب</a>
+          <a href="#ar-contact" id="nav-contact">اتصل بنا</a>
+        </nav>
+        <a href="/" class="cta-btn" id="topbar-cta">فتح التطبيق</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="toolbar">
+        <div class="lang-group" role="group" aria-label="Select Language">
+          <button type="button" class="lang-btn" id="btn-ar" onclick="setLang('ar')">العربية</button>
+          <button type="button" class="lang-btn" id="btn-en" onclick="setLang('en')">English</button>
+          <button type="button" class="lang-btn" id="btn-both" onclick="setLang('both')">العربية & English</button>
+        </div>
+
+        <div class="toolbar-actions">
+          <button type="button" class="copy-btn" id="copy-link-btn" onclick="copyPrivacyLink()">
+            نسخ الرابط المباشر
+          </button>
+          <a href="mailto:mowasla@mowasla.online" class="email-link">mowasla@mowasla.online</a>
+        </div>
+      </div>
+
+      <div class="stack">
+        <!-- ARABIC PRIVACY POLICY -->
+        <article class="policy-card" id="policy-ar" lang="ar" dir="rtl">
+          <header class="doc-header">
+            <div class="doc-meta">
+              <span>تطبيق مواصلة</span>
+              <span aria-hidden="true">·</span>
+              <span>تاريخ آخر تحديث: 13 نوفمبر 2026</span>
+              <span aria-hidden="true">·</span>
+              <span>رابط عام مباشر بدون تسجيل دخول</span>
+            </div>
+            <h1 class="doc-title">سياسة الخصوصية لتطبيق مواصلة</h1>
+          </header>
+
+          <section class="section" id="ar-intro">
+            <div class="section-heading">
+              <span class="section-num">01</span>
+              <h2>1. مقدمة</h2>
+            </div>
+            <p>
+              مرحباً بك في تطبيق "مواصلة". نحن نقدر خصوصيتك وملتزمون بحماية بياناتك الشخصية. تشرح سياسة الخصوصية هذه كيفية جمعنا واستخدامنا وإفصاحنا وحماية معلوماتك عند استخدام تطبيقنا وخدماتنا. يرجى قراءة هذه السياسة بعناية.
+            </p>
+          </section>
+
+          <section class="section" id="ar-data">
+            <div class="section-heading">
+              <span class="section-num">02</span>
+              <h2>2. المعلومات التي نجمعها</h2>
+            </div>
+            <p>نقوم بجمع المعلومات التي تقدمها مباشرة أو التي يتم جمعها تلقائياً عند استخدام التطبيق:</p>
+            <ul class="bullet-list">
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div><strong>البيانات الشخصية:</strong> الاسم، البريد الإلكتروني، رقم الهاتف، وصورة الملف الشخصي.</div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div><strong>بيانات الموقع الجغرافي:</strong></div>
+                </div>
+                <ul class="sub-list">
+                  <li>
+                    <strong>للركاب:</strong> نجمع بيانات موقع دقيقة (GPS) لتحديد مواقع الاستلام وتتبع مسار الرحلة.
+                  </li>
+                  <li>
+                    <strong>للسائقين:</strong> نجمع بيانات موقع دقيقة في الخلفية (حتى عندما يكون التطبيق مغلقاً أو غير مستخدم على الشاشة) لتمكين توجيه الرحلات، تتبع المسارات بدقة، وضمان السلامة العامة. هذا الإذن ضروري للوظائف الأساسية لوضع السائق.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>البيانات المالية:</strong> سجل المعاملات ورصيد المحفظة. نحن لا نخزن أرقام بطاقات الائتمان الكاملة؛ حيث تتم معالجة المدفوعات بشكل آمن عبر مزودي خدمات الدفع المعتمدين (مثل OPay).
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>معلومات الجهاز:</strong> طراز الجهاز، إصدار نظام التشغيل، ومعرفات الجهاز الفريدة لضمان الأمان، اكتشاف الأخطاء، ومنع الاحتيال.
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="section" id="ar-usage">
+            <div class="section-heading">
+              <span class="section-num">03</span>
+              <h2>3. كيف نستخدم معلوماتك</h2>
+            </div>
+            <p>نستخدم المعلومات التي جمعناها للأغراض التالية:</p>
+            <ul class="bullet-list">
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>توفير وإدارة خدمة حجز ومتابعة الرحلات.</div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>تسهيل عمليات الدفع والتحويلات المالية وإدارة المحفظة.</div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>تحسين أداء التطبيق وتطوير ميزات جديدة وتجربة المستخدم.</div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>ضمان أمن وسلامة كل من السائقين والركاب والتحقق من الهويات.</div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>إرسال الإشعارات والإرشادات الإدارية، مثل تحديثات السياسات، إيصالات الرحلات، والتنبيهات الأمنية.</div>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="section" id="ar-sharing">
+            <div class="section-heading">
+              <span class="section-num">04</span>
+              <h2>4. مشاركة البيانات مع الأطراف الثالثة</h2>
+            </div>
+            <p>نحن لا نبيع بياناتك الشخصية أبداً. نشارك المعلومات فقط في الحدود الضرورية التالية:</p>
+            <ul class="bullet-list">
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>مع المستخدمين الآخرين:</strong> يشارك الركاب والسائقون المعلومات الأساسية (الاسم، الصورة، الموقع، تفاصيل المركبة) لتسهيل إتمام الرحلة.
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>مقدمو الخدمات السحابية والتقنية:</strong> نستخدم خدمات خارجية موثوقة مثل Google Maps (للملاحة والخرائط) و Firebase (لبنية السيرفرات وقواعد البيانات).
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>المتطلبات القانونية:</strong> إذا كان ذلك مطلوباً بموجب القانون، أو استجابة لطلبات حكومية مشروعة، أو لحماية حقوق وسلامة مستخدمي تطبيق مواصلة.
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="section" id="ar-deletion">
+            <div class="section-heading">
+              <span class="section-num">05</span>
+              <h2>5. الاحتفاظ بالبيانات وحذفها</h2>
+            </div>
+            <p>نحتفظ ببياناتك طالما كان حسابك نشطاً أو طالما كان ذلك ضرورياً لتزويد الخدمات.</p>
+            <ul class="bullet-list">
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>حذف الحساب:</strong> لديك الحق الكامل في طلب حذف حسابك وبياناتك في أي وقت. يمكنك القيام بذلك مباشرة داخل التطبيق بالذهاب إلى: الإعدادات &gt; حذف الحساب. سيؤدي هذا الإجراء إلى إزالة ملفك الشخصي، سجل الرحلات، وبيانات المحفظة بشكل دائم من أنظمتنا.
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="section" id="ar-permissions">
+            <div class="section-heading">
+              <span class="section-num">06</span>
+              <h2>6. أذونات الجهاز المطلوبة</h2>
+            </div>
+            <ul class="bullet-list">
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>الموقع (Location):</strong> مطلوب للوظائف الأساسية (تحديد مكان الركاب وتتبع السائقين في الخلفية).
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>الكاميرا والتخزين (Camera/Storage):</strong> تستخدم لرفع مستندات التحقق (الهوية، رخصة القيادة) وصور الملف الشخصي.
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>الإشعارات (Notifications):</strong> تُستخدم لإرسال تحديثات حالة الرحلة والعروض.
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="section" id="ar-contact">
+            <div class="section-heading">
+              <span class="section-num">07</span>
+              <h2>7. اتصل بنا</h2>
+            </div>
+            <p>إذا كانت لديك أي أسئلة أو استفسارات حول سياسة الخصوصية هذه، يرجى التواصل معنا عبر البريد الإلكتروني:</p>
+            <div class="contact-row">
+              <strong>البريد الإلكتروني:</strong>
+              <a href="mailto:mowasla@mowasla.online" class="contact-link">mowasla@mowasla.online</a>
+            </div>
+          </section>
+        </article>
+
+        <!-- ENGLISH PRIVACY POLICY -->
+        <article class="policy-card" id="policy-en" lang="en" dir="ltr">
+          <header class="doc-header">
+            <div class="doc-meta">
+              <span>Mowasla Application</span>
+              <span aria-hidden="true">·</span>
+              <span>Last Updated: November 13, 2026</span>
+              <span aria-hidden="true">·</span>
+              <span>Public Direct Link · No Sign-In Required</span>
+            </div>
+            <h1 class="doc-title">Mowasla Privacy Policy</h1>
+          </header>
+
+          <section class="section" id="en-intro">
+            <div class="section-heading">
+              <span class="section-num">01</span>
+              <h2>1. Introduction</h2>
+            </div>
+            <p>
+              Welcome to the "Mowasla" application. We value your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our application and services. Please read this policy carefully.
+            </p>
+          </section>
+
+          <section class="section" id="en-data">
+            <div class="section-heading">
+              <span class="section-num">02</span>
+              <h2>2. Information We Collect</h2>
+            </div>
+            <p>We collect information that you provide directly or that is collected automatically when you use the application:</p>
+            <ul class="bullet-list">
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div><strong>Personal Data:</strong> Name, email address, phone number, and profile photo.</div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div><strong>Geographic Location Data:</strong></div>
+                </div>
+                <ul class="sub-list">
+                  <li>
+                    <strong>For Passengers:</strong> We collect precise location data (GPS) to determine pickup locations and track the trip route.
+                  </li>
+                  <li>
+                    <strong>For Drivers:</strong> We collect precise location data in the background (even when the app is closed or not actively in use on screen) to enable trip dispatching, accurately track routes, and ensure public safety. This permission is essential for the core functionality of Driver Mode.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>Financial Data:</strong> Transaction history and wallet balance. We do not store full credit card numbers; payments are processed securely through authorized payment service providers (such as OPay).
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>Device Information:</strong> Device model, operating system version, and unique device identifiers to ensure security, detect errors, and prevent fraud.
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="section" id="en-usage">
+            <div class="section-heading">
+              <span class="section-num">03</span>
+              <h2>3. How We Use Your Information</h2>
+            </div>
+            <p>We use the information we collect for the following purposes:</p>
+            <ul class="bullet-list">
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>Providing and managing the ride booking and trip tracking service.</div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>Facilitating payment transactions, financial transfers, and wallet management.</div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>Improving application performance, developing new features, and enhancing user experience.</div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>Ensuring the safety and security of both drivers and passengers and verifying identities.</div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>Sending notifications and administrative notices, such as policy updates, trip receipts, and security alerts.</div>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="section" id="en-sharing">
+            <div class="section-heading">
+              <span class="section-num">04</span>
+              <h2>4. Sharing Data with Third Parties</h2>
+            </div>
+            <p>We never sell your personal data. We only share information within the following necessary limits:</p>
+            <ul class="bullet-list">
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>With Other Users:</strong> Passengers and drivers share essential information (name, photo, location, vehicle details) to facilitate completing the trip.
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>Cloud &amp; Technical Service Providers:</strong> We use trusted third-party services such as Google Maps (for navigation and mapping) and Firebase (for server infrastructure and databases).
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>Legal Requirements:</strong> When required by law, in response to lawful government requests, or to protect the rights and safety of Mowasla users.
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="section" id="en-deletion">
+            <div class="section-heading">
+              <span class="section-num">05</span>
+              <h2>5. Data Retention &amp; Deletion</h2>
+            </div>
+            <p>We retain your data as long as your account remains active or as necessary to provide services.</p>
+            <ul class="bullet-list">
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>Account Deletion:</strong> You have the full right to request deletion of your account and data at any time. You can do this directly inside the app by going to: Settings &gt; Delete Account. This action will permanently remove your profile, trip history, and wallet data from our systems.
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="section" id="en-permissions">
+            <div class="section-heading">
+              <span class="section-num">06</span>
+              <h2>6. Required Device Permissions</h2>
+            </div>
+            <ul class="bullet-list">
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>Location:</strong> Required for core functionality (locating passengers and tracking drivers in the background).
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>Camera &amp; Storage:</strong> Used to upload verification documents (National ID, Driver's License) and profile photos.
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="bullet-row">
+                  <span class="bullet-dot" aria-hidden="true"></span>
+                  <div>
+                    <strong>Notifications:</strong> Used to send trip status updates and promotional offers.
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="section" id="en-contact">
+            <div class="section-heading">
+              <span class="section-num">07</span>
+              <h2>7. Contact Us</h2>
+            </div>
+            <p>If you have any questions or inquiries regarding this Privacy Policy, please contact us by email:</p>
+            <div class="contact-row">
+              <strong>Email:</strong>
+              <a href="mailto:mowasla@mowasla.online" class="contact-link">mowasla@mowasla.online</a>
+            </div>
+          </section>
+        </article>
+      </div>
+
+      <footer class="footer">
+        <span>&copy; 2026 Mowasla · https://waslny.ai.studio/privacy-policy</span>
+        <div>
+          <a href="mailto:mowasla@mowasla.online">mowasla@mowasla.online</a>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      (function () {
+        var arEl = document.getElementById('policy-ar');
+        var enEl = document.getElementById('policy-en');
+        var btnAr = document.getElementById('btn-ar');
+        var btnEn = document.getElementById('btn-en');
+        var btnBoth = document.getElementById('btn-both');
+        var copyBtn = document.getElementById('copy-link-btn');
+        var topbarCta = document.getElementById('topbar-cta');
+        var navDeletion = document.getElementById('nav-deletion');
+        var navContact = document.getElementById('nav-contact');
+
+        function applyLang(mode, syncUrl) {
+          if (mode !== 'ar' && mode !== 'en' && mode !== 'both') {
+            mode = 'both';
+          }
+
+          arEl.hidden = mode === 'en';
+          enEl.hidden = mode === 'ar';
+
+          btnAr.classList.toggle('active', mode === 'ar');
+          btnEn.classList.toggle('active', mode === 'en');
+          btnBoth.classList.toggle('active', mode === 'both');
+
+          var isEnOnly = mode === 'en';
+          document.documentElement.dir = isEnOnly ? 'ltr' : 'rtl';
+          document.documentElement.lang = isEnOnly ? 'en' : 'ar';
+
+          if (topbarCta) topbarCta.textContent = isEnOnly ? 'Open Mowasla' : 'فتح التطبيق';
+          if (copyBtn && copyBtn.dataset.copied !== '1') {
+            copyBtn.textContent = isEnOnly ? 'Copy Direct Link' : 'نسخ الرابط المباشر';
+          }
+          if (navDeletion) {
+            navDeletion.href = isEnOnly ? '#en-deletion' : '#ar-deletion';
+            navDeletion.textContent = isEnOnly ? 'Data Deletion' : 'حذف الحساب';
+          }
+          if (navContact) {
+            navContact.href = isEnOnly ? '#en-contact' : '#ar-contact';
+            navContact.textContent = isEnOnly ? 'Contact' : 'اتصل بنا';
+          }
+
+          if (syncUrl && window.history && window.history.replaceState) {
+            try {
+              var u = new URL(window.location.href);
+              u.searchParams.set('lang', mode);
+              window.history.replaceState({}, '', u.toString());
+            } catch (e) {}
+          }
+        }
+
+        window.setLang = function (mode) {
+          applyLang(mode, true);
+        };
+
+        window.copyPrivacyLink = function () {
+          var url =
+            window.location.hostname === 'localhost'
+              ? 'https://waslny.ai.studio/privacy-policy'
+              : window.location.origin + '/privacy-policy';
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).catch(function () {});
+          }
+          copyBtn.dataset.copied = '1';
+          var isEn = document.documentElement.lang === 'en';
+          copyBtn.textContent = isEn ? 'Link Copied' : 'تم نسخ الرابط';
+          setTimeout(function () {
+            delete copyBtn.dataset.copied;
+            copyBtn.textContent =
+              document.documentElement.lang === 'en' ? 'Copy Direct Link' : 'نسخ الرابط المباشر';
+          }, 2200);
+        };
+
+        var params = new URLSearchParams(window.location.search);
+        var q = (params.get('lang') || '').toLowerCase();
+        var initial =
+          q === 'en' || q === 'ar' || q === 'both'
+            ? q
+            : (navigator.language || '').toLowerCase().startsWith('en')
+            ? 'en'
+            : 'both';
+        applyLang(initial, false);
+      })();
+    </script>
+  </body>
+</html>

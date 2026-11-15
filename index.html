@@ -1,0 +1,376 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content" />
+    <meta name="color-scheme" content="light only" />
+    <meta name="theme-color" content="#FFC90E" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>Mowasla</title>
+    <meta name="description" content="A professional ride-hailing application with Passenger, Driver, and Admin portals. Features real-time simulation, AI-powered route insights, and modern mobile-first UI." />
+    <meta property="og:title" content="Mowasla" />
+    <meta property="og:description" content="A professional ride-hailing application with Passenger, Driver, and Admin portals. Features real-time simulation, AI-powered route insights, and modern mobile-first UI." />
+    <script>
+      // Catch Google Maps Auth Failures (Invalid Key or Referrer Restriction)
+      window.gm_authFailure = function() {
+        console.warn("Google Maps Authentication Failed: Please check API key restrictions or enabled services.");
+        if (window.googleMapsErrorCallback) window.googleMapsErrorCallback('InvalidKeyMapError');
+      };
+
+      (function() {
+        window.addEventListener('error', (e) => {
+          if (e.message === 'Script error.' || (typeof e.message === 'string' && e.message.includes('Google Maps'))) {
+             e.preventDefault();
+             e.stopPropagation();
+          }
+        });
+        
+        var key = "%VITE_GOOGLE_MAPS_API_KEY%";
+        if (key && !key.startsWith("%")) {
+          // Official Google Maps Platform dynamic bootstrap loader
+          (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+            key: key,
+            v: "weekly",
+            libraries: "marker,geometry,visualization"
+          });
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@700;800;900&family=Cairo:wght@700;800;900;1000&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+      /* Mobile/WebView Resets */
+      :root {
+        --sat: env(safe-area-inset-top, 20px);
+        --sab: env(safe-area-inset-bottom, 20px);
+        --sal: env(safe-area-inset-left, 0px);
+        --sar: env(safe-area-inset-right, 0px);
+        --app-yellow: #FFC90E;
+        --app-black: #1A1A1A;
+        --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      * {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      html {
+        height: 100%;
+        /* Fix for iOS 100vh issue */
+        height: -webkit-fill-available;
+        width: 100%;
+        overflow: hidden;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        height: 100%; 
+        /* Fix for iOS 100vh issue */
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        overscroll-behavior: none;
+        -webkit-tap-highlight-color: transparent;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background-color: #F8F9FA;
+        color: #111827; /* Tailwind text-gray-900 */
+      }
+
+      #root {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      input, select, textarea {
+        font-size: 16px !important; 
+      }
+
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      
+      /* Safe Area Utilities */
+      .pt-safe { padding-top: var(--sat) !important; }
+      .pb-safe { padding-bottom: var(--sab) !important; }
+      .pl-safe { padding-left: var(--sal); }
+      .pr-safe { padding-right: var(--sar); }
+      .top-safe { top: var(--sat); }
+      .bottom-safe { bottom: var(--sab); }
+      .mb-safe { margin-bottom: var(--sab); }
+      
+      /* --- ANIMATION SYSTEM --- */
+
+      /* 1. Page Transitions */
+      @keyframes page-enter {
+        0% { 
+          opacity: 0; 
+          transform: translateX(30px) scale(0.98); 
+        }
+        100% { 
+          opacity: 1; 
+          transform: translateX(0) scale(1); 
+        }
+      }
+      .animate-page-enter {
+        animation: page-enter 0.5s var(--ease-out-expo) forwards;
+        will-change: transform, opacity;
+      }
+
+      /* 2. Fade In Up (for Lists & Cards) */
+      @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-up {
+        animation: fade-in-up 0.6s var(--ease-out-expo) forwards;
+      }
+
+      /* 3. Slide Up (for Bottom Sheets) */
+      @keyframes slide-up {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+      }
+      .animate-slide-up {
+        animation: slide-up 0.5s var(--ease-out-expo) forwards;
+      }
+
+      /* 4. Fade In (General) */
+      @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .animate-fade-in {
+        animation: fade-in 0.4s ease-out forwards;
+      }
+      
+      /* 5. Bounce/Pulse (Attention Seekers) */
+      @keyframes bounce-short {
+        from { transform: translateY(0); }
+        to { transform: translateY(-5px); }
+      }
+      .animate-bounce-short {
+        animation: bounce-short 0.5s infinite alternate;
+      }
+
+      /* 6. Stagger Delays (For Lists) */
+      .stagger-1 { animation-delay: 50ms; }
+      .stagger-2 { animation-delay: 100ms; }
+      .stagger-3 { animation-delay: 150ms; }
+      .stagger-4 { animation-delay: 200ms; }
+      .stagger-5 { animation-delay: 250ms; }
+
+      /* MAP RADAR ANIMATIONS */
+      @keyframes radar-pulse {
+        0% { transform: scale(1); opacity: 0.8; }
+        100% { transform: scale(3.5); opacity: 0; }
+      }
+
+      .marker-radar {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .marker-radar-wave {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        animation: radar-pulse 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+
+      .wave-1 { animation-delay: 0s; }
+      .wave-2 { animation-delay: 0.6s; }
+      .wave-3 { animation-delay: 1.2s; }
+
+      /* Passenger/Pickup Blue Waves */
+      .radar-passenger .marker-radar-wave {
+        background-color: rgba(26, 115, 232, 0.15);
+        border: 1px solid rgba(26, 115, 232, 0.3);
+      }
+
+      /* Driver/Car Yellow Waves */
+      .radar-driver .marker-radar-wave {
+        background-color: rgba(255, 201, 14, 0.2);
+        border: 1px solid rgba(255, 201, 14, 0.4);
+      }
+
+      /* Radar & Floating Animations for Searching UI */
+      @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .animate-spin-slow {
+        animation: spin-slow 10s linear infinite;
+      }
+      
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      /* NEW: Flashing attention animation for important links */
+      @keyframes flash-pulse {
+        0%, 100% { opacity: 1; transform: scale(1); color: #3b82f6; }
+        50% { opacity: 0.6; transform: scale(1.05); color: #2563eb; }
+      }
+      .animate-flash-attention {
+        animation: flash-pulse 1.5s infinite ease-in-out;
+      }
+
+      /* NEW: Mirroring shimmer text effect */
+      @keyframes shimmer-mirror {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+      }
+      .shimmer-text {
+        background: linear-gradient(90deg, #6b7280 0%, #3b82f6 50%, #6b7280 100%);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer-mirror 2.5s linear infinite;
+      }
+
+      /* Available Driver Pulse & Icon Animations */
+      @keyframes driver-pulse {
+        0% { transform: scale(0.6); opacity: 0.9; }
+        50% { opacity: 0.6; }
+        100% { transform: scale(2.6); opacity: 0; }
+      }
+      .driver-pulse-wave {
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(37, 99, 235, 0.18);
+        border: 2px solid rgba(37, 99, 235, 0.4);
+        pointer-events: none;
+        animation: driver-pulse 2.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+        z-index: -1;
+      }
+      .driver-pulse-wave-2 {
+        animation-delay: 0.7s;
+      }
+      .driver-pulse-wave-3 {
+        animation-delay: 1.4s;
+      }
+      @keyframes driver-aura-pulse {
+        0% { transform: scale(0.78); opacity: 0.75; }
+        70% { transform: scale(1.45); opacity: 0; }
+        100% { transform: scale(1.45); opacity: 0; }
+      }
+      .driver-marker-aura {
+        position: absolute;
+        inset: 4px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(37, 99, 235, 0.24) 0%, rgba(37, 99, 235, 0.06) 65%, transparent 100%);
+        pointer-events: none;
+        z-index: 0;
+      }
+      .driver-marker-aura::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 1.5px solid rgba(37, 99, 235, 0.45);
+        animation: driver-aura-pulse 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+      }
+      .driver-marker-aura--active {
+        background: radial-gradient(circle, rgba(37, 99, 235, 0.38) 0%, rgba(56, 189, 248, 0.14) 65%, transparent 100%);
+      }
+      .driver-marker-aura--active::after {
+        border: 2px solid rgba(37, 99, 235, 0.72);
+        animation-duration: 1.6s;
+      }
+      .driver-marker-inner {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        z-index: 1;
+        will-change: transform;
+      }
+      @keyframes splash-spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+    <script>
+      // Service Worker Safety Polyfill
+      if (typeof navigator !== 'undefined' && !('serviceWorker' in navigator)) {
+        Object.defineProperty(navigator, 'serviceWorker', {
+          value: {
+            register: function() { return Promise.reject("Service Workers not supported"); },
+            addEventListener: function() {},
+            removeEventListener: function() {},
+            getRegistration: function() { return Promise.resolve(null); },
+            getRegistrations: function() { return Promise.resolve([]); },
+            controller: null,
+            ready: new Promise(function() {})
+          },
+          writable: false,
+          configurable: true
+        });
+      }
+
+      if (typeof Notification === 'undefined') {
+        window.Notification = {
+          permission: 'granted',
+          requestPermission: () => Promise.resolve('granted'),
+          maxActions: 2
+        };
+      }
+      window.saveDeviceToken = function(token) {
+        console.log("FCM Token received early:", token);
+        try { localStorage.setItem("fcm_token", token); } catch(e) {}
+      };
+      window.handleGoogleSignIn = function(token) {};
+    </script>
+</head>
+  <body>
+    <div id="root">
+      <div id="initial-splash" style="position:fixed;inset:0;background:linear-gradient(180deg, #FFC72C 0%, #FFB800 50%, #FFA800 100%);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:3rem 1.5rem;padding-top:max(3rem, env(safe-area-inset-top));padding-bottom:max(2.5rem, env(safe-area-inset-bottom));z-index:99999;font-family:'Alexandria','Cairo',system-ui,-apple-system,sans-serif;-webkit-user-select:none;user-select:none;direction:rtl;">
+        <div></div>
+        <div style="text-align:center;padding:0 1.25rem;">
+          <h1 style="margin:0;font-size:clamp(2.5rem, 8.5vw, 4.25rem);font-weight:900;color:#111827;line-height:1.15;letter-spacing:-0.02em;font-family:'Alexandria','Cairo',sans-serif;">
+            <div>مشوارك بقى أسهل</div>
+            <div style="margin-top:0.35rem;">وعلى طريقتك</div>
+          </h1>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;margin-top:auto;padding-bottom:1rem;direction:ltr;">
+          <div style="font-size:2.25rem;font-weight:900;color:#111827;letter-spacing:-0.03em;font-family:'Inter',system-ui,-apple-system,sans-serif;">
+            Mowasla
+          </div>
+          <div style="margin-top:1rem;width:28px;height:28px;border-radius:50%;border:3px solid rgba(17,24,39,0.22);border-top-color:#111827;animation:splash-spin 0.85s linear infinite;"></div>
+        </div>
+      </div>
+    </div>
+    <div id="recaptcha-container"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
